@@ -1,0 +1,1 @@
+a model is a schema in your database
