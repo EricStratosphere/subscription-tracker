@@ -1,6 +1,10 @@
+
+//app.js HOLDS THE CODE FOR THE MAIN BACKEND SERVER.
 //setting up an express server
 
 import express from 'express';
+//we are able to use the import keyword thanks to our type set to module in package.json. Otherwise, we would be using require('express');
+
 import { PORT } from './config/env.js'
 
 
@@ -16,6 +20,8 @@ import connectToDatabase from './database/mongodb.js';
 import { connect } from 'http2';
 
 const app = express();
+//express() functions initializes the app for express
+
 
 //this is typically used in middleware.
 app.use('/api/v1/auth', authRouter);
@@ -23,9 +29,11 @@ app.use('/api/v1/subscriptions', subscriptionRouter);
 app.use('/api/v1/users', userRouter);
 //this means we can use the authRouter API by first adding the endpoint /api/v1/auth/ 
 
+//basically, app.use links a url to a specific route for other APIs.
+
 app.get('/', (req, res) => {
     //the first thing you see when you go to the port where the backend server is running.
-    res.send("Welcome to the subscription tracker API!");
+    return res.send("Welcome to the subscription tracker API!");
 })
 
 //app.listen in express is a function used to start a server and make it listen for incoming requests on a specified port and host.

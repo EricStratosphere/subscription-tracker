@@ -17,7 +17,7 @@ import {config} from 'dotenv';
 
 //if it hasn't, then the config function adds those keys into the global process.env object.
 config({path : `.env.${process.env.NODE_ENV || 'development'}.local`});
-
+//the config function is what sets the configurations for the process.env object.
 
 //process.env is a global javascript object in node js that holds user defined environment variables
 

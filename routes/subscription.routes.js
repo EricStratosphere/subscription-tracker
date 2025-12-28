@@ -1,7 +1,7 @@
 import {Router} from 'express';
 
 const subscriptionRouter = Router();
-
+//a router essentially functions as a signal that lets its endpoints be visible to the main app's APIs. The main app can use app.use() to link the router along with its routes to a specific url.
 
 subscriptionRouter.get('/', (req, res) => {
     return res.send( {title : 'GET all subscriptions'} )

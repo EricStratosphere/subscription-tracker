@@ -9,6 +9,8 @@ if(!DB_URI){
 
 //COnnect to db
 
+//technically, this part has nothing to do with expresjs na, the point of mongoose or mongodb is to be used in conjunction with 
+
 const connectToDatabase = async () => {
     try{
         await mongoose.connect(DB_URI);
