@@ -33,12 +33,12 @@ const errorMiddleware = (err, req, res, next) => {
         //if there is more than one error.
         if(err.name === 'ValidationError'){
             const message = Object.values(err.errors).map(val => val.message);
-            error = new Error(message.join(', '));
+            error = new Error("Validation error: " + message.join(', '));
             //note, 
             error.statusCode = 400;
         }
 
-        res.status(error.statusCode || 500).json({success : false, error : error.mesage || 'Server Error'});
+        res.status(error.statusCode || 500).json({success : false, error : error.message || 'Server Error'});
 
         //note that res.send and res.json essentially both send the same thing, except that JSON insists that its contents are specifically javascript objects while send can send other content not just jsons.
     }

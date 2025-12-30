@@ -24,7 +24,7 @@ const app = express();
 //express() functions initializes the app for express
 
 app.use(express.json())
-//express.json allows our app to handle jason data sent in requests.
+//express.json allows our app to handle json data sent in requests.
 app.use(express.urlencoded({extended : false}))
 //this helps us to process form data sent by HTML forms in a simple format.
 

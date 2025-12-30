@@ -1,0 +1,6 @@
+The controller directory handles the authentication and authorization side of things.
+It is in here that we make use of the installation of javascript web token and bcryptjs.
+
+After running npm install jwt and bcrypt. We can now proceed here.
+
+Although we already have the auth routes for authentication, it is not there where we actually handle authentication and authorization, and it would be considered bad practice to have all the implementation for that there, so it would be better to abstract away from it.
