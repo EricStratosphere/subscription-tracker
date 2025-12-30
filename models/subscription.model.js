@@ -30,7 +30,7 @@ const subscriptionSchema = new mongoose.Schema(
             required : true,
         },
         paymentMethod : {
-            type : String,
+            type : String, 
             required : true,
             trim : true,
         },
@@ -39,7 +39,6 @@ const subscriptionSchema = new mongoose.Schema(
             enum : ['active', 'cancelled', 'expire'],
             default : 'active',
         },
-
         startDate : {
             type : Date,
             required : true,
@@ -52,14 +51,16 @@ const subscriptionSchema = new mongoose.Schema(
             type : Date,
             required : true,
             validate : {
-                validator : (value) => value > this.startDate,
+                validator : function (value){
+                    return value > this.startDate
+                },
                 message : 'Renewal date must be after the start date', 
             }
         },
-
         user : {
             type : mongoose.Schema.Types.ObjectId,
             ref : 'User',
+            //ref  
             required : true,
             index : true,
         }
@@ -72,6 +73,8 @@ const subscriptionSchema = new mongoose.Schema(
 
 
 //Basicaly, this means that for every instance of a subscriptionSchema created, this function runs first.
+
+//pre in mongoose is a 
 subscriptionSchema.pre('save', (next) => {
     if(!this.renewalDate){
         const renewalPeriods = {
@@ -89,5 +92,13 @@ subscriptionSchema.pre('save', (next) => {
             this.status = 'expired';
         }
         next();
+        //next in this case refers to the main "save" operation that will actually call once you call Subscription.save()
+        
+        //This pre function essentially prepends a callback function to the function name being passed in the first parameter. For instance, if the first parameter contains the string 'save'. The callback function will be prepended and executed first before the actual save function executes when called by the instantiated model. 
     }
 })
+
+const Subscription = mongoose.model("Subscription", subscriptionSchema);
+
+//mongoose initializes the schema into a model which can be used 
+export default Subscription;

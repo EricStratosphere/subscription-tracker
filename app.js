@@ -17,13 +17,21 @@ import userRouter from './routes/user.routes.js';
 
 
 import connectToDatabase from './database/mongodb.js';
-import { connect } from 'http2';
+import cookieParser from 'cookie-parser';
+import { errorMiddleware } from './middlewares/error.middleware.js';
 
 const app = express();
 //express() functions initializes the app for express
 
+app.use(express.json())
+//express.json allows our app to handle jason data sent in requests.
+app.use(express.urlencoded({extended : false}))
+//this helps us to process form data sent by HTML forms in a simple format.
 
-//this is typically used in middleware.
+app.use(cookieParser());
+//parse cookies.
+
+//this is typically used in middleware. 
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/subscriptions', subscriptionRouter);
 app.use('/api/v1/users', userRouter);
@@ -31,16 +39,17 @@ app.use('/api/v1/users', userRouter);
 
 //basically, app.use links a url to a specific route for other APIs.
 
+app.use(errorMiddleware);
 app.get('/', (req, res) => {
-    //the first thing you see when you go to the port where the backend server is running.
-    return res.send("Welcome to the subscription tracker API!");
+  //the first thing you see when you go to the port where the backend server is running.
+  return res.send('<div style="background-color : blue;">Welcome!</div>');
 })
 
 //app.listen in express is a function used to start a server and make it listen for incoming requests on a specified port and host.
-app.listen(PORT, async ()=>{
-    console.log(`Subscription Tracker running on http://localhost:${PORT}`);
+app.listen(PORT, async () => {
+  console.log(`Subscription Tracker running on http://localhost:${PORT}`);
 
-    await connectToDatabase();
+  await connectToDatabase();
 })
 console.log("server running on 5500");
 

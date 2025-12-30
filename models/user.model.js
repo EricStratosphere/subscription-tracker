@@ -27,4 +27,8 @@ const userSchema = new mongoose.Schema( {
 const User = mongoose.model('User', userSchema);
 //timestamps lets us know when the user has been created, updated or modified
 
+//Note: a Schema is just the blueprint of the table's structure. A Model is the compiled constructor built from the schema. The schema is compiled into a model. It is not yet an instance of the schema itself. The model is what creates instances of a model.
+//an instance is created this way: User.create({name : "Jason", etc.})
+
+// User.create({name : "Jason", email : "stratospherestu@gmail.com", password : "stratosphere123"});
 export default User;
