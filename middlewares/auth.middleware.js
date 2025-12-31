@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from '../config/env.js';
 import User from '../models/user.model.js'
 export const authorize = async (req, res, next) => {
-    console.log("I am from a different middleware!");
+    // console.log("I am from a different middleware!");
     try{
         let token;
 
