@@ -1,15 +1,12 @@
 import { Router } from 'express';
-
+import { getUser, getUsers } from '../controllers/user.controller.js';
+import { authorize } from '../middlewares/auth.middleware.js';
 const userRouter = Router();
 
-userRouter.get('/', (req, res) => {
-    return res.send({title : 'GET all users'});
-})
+userRouter.get('/', getUsers)
 
 //the colon means it's a dynamic parameter, this means that each get request is unique based on the id value appended to the request.
-userRouter.get('/:id', (req, res) => {
-    return res.send('GET user details');
-})
+userRouter.get('/:id', authorize, getUser)
 
 
 userRouter.post('/', (req, res) => {

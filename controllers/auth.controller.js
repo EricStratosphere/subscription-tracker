@@ -12,9 +12,10 @@ export const signUp = async (req, res, next) =>{
     //note, this session has nothing to do with a user session this is a mongoose session   
     //starting a mongoose session follows the practice of atomic operations.
     //where a database operations MUST be atomic. If a process involves a sequence of operations, then that sequence must all be correct in order for them to execute, if one is not, then the entire process aborts.
-    session.startTransaction();
+    
 
     try{
+        session.startTransaction();
         const {name, email, password} = req.body;
         const existingUser = await User.findOne({email});
         if(existingUser){
@@ -50,15 +51,46 @@ export const signUp = async (req, res, next) =>{
             })
     }catch(error){
         await session.abortTransaction();
-        session.endSession();
         next(error);
+    }
+    finally{
+        session.endSession();
     }
 }
 
 export const signIn = async (req, res, next) => {
+    try {
+        const {email, password} = req.body;
 
+        const user = await User.findOne({email});
+        if(!user){
+            const error = new Error('User not found');
+            error.statusCode = 404;
+            throw error;
+        }
+
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if(!isPasswordValid){
+            const error = new Error('Invalid password');
+            error.statusCode = 401;
+            throw error;
+        }
+
+        const token = jwt.sign({userId : user._id}, JWT_SECRET, {expiresIn : JWT_EXPIRES_IN});
+        res.status(200).json({
+            success : true,
+            message : 'User signed in successfully',
+            data : {
+                token,
+                user,
+            }
+        })
+    }catch(error){
+        next(error);
+    }
 }
 
 export const signOut = (req, res, next) => {
+
 
 }

@@ -7,7 +7,7 @@
 const errorMiddleware = (err, req, res, next) => {
     //Paramaters involved : err, the error itself. 
     // req: The request that called an error.
-
+    console.log("I am an error middleware!");
     try{
         let error = { ...err };
         error.message = err.message;

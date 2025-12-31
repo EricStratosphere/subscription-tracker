@@ -19,7 +19,7 @@ import userRouter from './routes/user.routes.js';
 import connectToDatabase from './database/mongodb.js';
 import cookieParser from 'cookie-parser';
 import { errorMiddleware } from './middlewares/error.middleware.js';
-
+import { customFunc, authorize } from './middlewares/auth.middleware.js';
 const app = express();
 //express() functions initializes the app for express
 
@@ -30,6 +30,10 @@ app.use(express.urlencoded({extended : false}))
 
 app.use(cookieParser());
 //parse cookies.
+
+
+app.use(customFunc);
+app.use(authorize);
 
 //this is typically used in middleware. 
 app.use('/api/v1/auth', authRouter);
