@@ -20,6 +20,7 @@ import connectToDatabase from './database/mongodb.js';
 import cookieParser from 'cookie-parser';
 import { errorMiddleware } from './middlewares/error.middleware.js';
 import { customFunc, authorize } from './middlewares/auth.middleware.js';
+import arcjetMiddleware from './middlewares/arcjet.middleware.js';
 const app = express();
 //express() functions initializes the app for express
 
@@ -31,8 +32,11 @@ app.use(express.urlencoded({extended : false}))
 app.use(cookieParser());
 //parse cookies.
 
-/*
 app.use(customFunc);
+
+app.use(errorMiddleware);
+app.use(arcjetMiddleware);
+/*
 app.use(authorize);*/
 
 //IMPORTANT NOTE: MIDDLEWARE ARE ONLY CHECKED BEFORE ROUTES IF YOU CALL THEM IN "app.use(middleware)". If you don't want them called during EVERY API call, you can chain them by adding them to a route. See auth.routes.js.
@@ -45,11 +49,11 @@ app.use('/api/v1/users', userRouter);
 
 //basically, app.use links a url to a specific route for other APIs.
 
-app.use(errorMiddleware);
 app.get('/', (req, res) => {
   //the first thing you see when you go to the port where the backend server is running.
   return res.send('<div style="background-color : blue;">Welcome!</div>');
 })
+
 
 //app.listen in express is a function used to start a server and make it listen for incoming requests on a specified port and host.
 app.listen(PORT, async () => {
