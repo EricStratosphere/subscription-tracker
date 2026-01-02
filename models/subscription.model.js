@@ -49,7 +49,7 @@ const subscriptionSchema = new mongoose.Schema(
         },
         renewalDate : {
             type : Date,
-            required : true,
+            required : false,
             validate : {
                 validator : function (value){
                     return value > this.startDate
@@ -75,7 +75,7 @@ const subscriptionSchema = new mongoose.Schema(
 //Basicaly, this means that for every instance of a subscriptionSchema created, this function runs first.
 
 //pre in mongoose is a 
-subscriptionSchema.pre('save', (next) => {
+subscriptionSchema.pre('save', function(next) {
     if(!this.renewalDate){
         const renewalPeriods = {
             daily : 1,
@@ -89,13 +89,13 @@ subscriptionSchema.pre('save', (next) => {
         // 
 
         if(this.renewalDate < new Date()){
-            this.status = 'expired';
+            this.status = 'expire';
         }
-        next();
         //next in this case refers to the main "save" operation that will actually call once you call Subscription.save()
         
         //This pre function essentially prepends a callback function to the function name being passed in the first parameter. For instance, if the first parameter contains the string 'save'. The callback function will be prepended and executed first before the actual save function executes when called by the instantiated model. 
     }
+    next();
 })
 
 const Subscription = mongoose.model("Subscription", subscriptionSchema);
