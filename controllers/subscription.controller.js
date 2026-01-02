@@ -13,6 +13,25 @@ export const createSubscription = async (req, res, next) => {
 }
 
 
+export const getUserSubscriptions = async (req, res, next) => {
+    try{
+        if(req.user.id !== req.params.id){
+            //check if the user making the request is the same as the one in the token.
+            const error = new Error("Not the owner of the account!");
+            error.status = 401;
+            throw error;
+        }
+        const subscriptions = await Subscription.find({user : req.params.id});
+        //note that the subscription schema's user field is a foreign key that references a specific user's ID. Hence why the object being passed into the find method is an object with a user field containing the param id. 
+        
+        res.status(201).json({sucess : true, data : subscriptions});
+
+    }   
+    catch(e){
+        next(e)
+    }
+}
+
 /*{
   "name" : "Netflix Premium",
   "price" : 15.99,
