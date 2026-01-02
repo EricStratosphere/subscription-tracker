@@ -12,7 +12,7 @@ subscriptionRouter.get('/:id', (req, res) => {
     return res.send( {title : 'GET subscription details'} )
 })
 
-subscriptionRouter.post('/:id', authorize, createSubscription)
+subscriptionRouter.post('/', authorize, createSubscription)
 
 subscriptionRouter.put('/:id', (req, res) => {
     return res.send( {title : 'UPDATE subscription'} )
