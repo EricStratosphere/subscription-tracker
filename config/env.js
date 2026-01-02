@@ -31,4 +31,4 @@ config({path : `.env.${process.env.NODE_ENV || 'development'}.local`});
 //https://www.reddit.com/r/node/comments/6cz4jw/having_trouble_understanding_the_benefits_and
 
 //and https://stackoverflow.com/questions/65848714/what-does-requiredotenv-config-do
-export const { PORT, NODE_ENV, DB_URI, JWT_SECRET, JWT_EXPIRES_IN, ARCJET_ENV, ARCJET_KEY } = process.env; 
+export const { PORT, NODE_ENV, DB_URI, JWT_SECRET, JWT_EXPIRES_IN, ARCJET_ENV, ARCJET_KEY, QSTASH_TOKEN, QSTASH_URL, SERVER_URL } = process.env; 

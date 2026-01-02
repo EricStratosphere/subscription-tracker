@@ -21,9 +21,11 @@ import cookieParser from 'cookie-parser';
 import { errorMiddleware } from './middlewares/error.middleware.js';
 import { customFunc, authorize } from './middlewares/auth.middleware.js';
 import arcjetMiddleware from './middlewares/arcjet.middleware.js';
+import workflowRouter from './routes/workflow.route.js';
 const app = express();
 //express() functions initializes the app for express
 
+app.disable('x-powered-by');
 app.use(express.json())
 //express.json allows our app to handle json data sent in requests.
 app.use(express.urlencoded({extended : false}))
@@ -45,6 +47,7 @@ app.use(authorize);*/
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/subscriptions', subscriptionRouter);
 app.use('/api/v1/users', userRouter);
+app.use('/api/v1/workflows', workflowRouter);
 //this means we can use the authRouter API by first adding the endpoint /api/v1/auth/ 
 
 //basically, app.use links a url to a specific route for other APIs.
